@@ -28,7 +28,6 @@ passport.use(new FacebookStrategy({
     callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/facebook/callback'
   },
   function(token, tokenSecret, profile, done) {
-    console.log(arguments)
     // retrieve user ...
     done(null, user)
   }

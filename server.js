@@ -54,7 +54,6 @@ public.get('/auth/facebook/callback',
 )
 
 app.use(function*(next) {
-  this.req.session = this.session
   this.req.query = this.query
   yield next
 })
