@@ -3,6 +3,7 @@ var koa = require('koa')
 
 // sessions
 var session = require('koa-session')
+// var session = require('koa-sess') // alternative
 app.keys = ['your-session-secret']
 app.use(session())
 
@@ -48,6 +49,15 @@ public.get('/auth/facebook', passport.authenticate('facebook'))
 
 public.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
+    successRedirect: '/app',
+    failureRedirect: '/'
+  })
+)
+
+public.get('/auth/twitter', passport.authenticate('twitter'))
+
+public.get('/auth/twitter/callback', 
+  passport.authenticate('twitter', {
     successRedirect: '/app',
     failureRedirect: '/'
   })

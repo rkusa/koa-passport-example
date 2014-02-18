@@ -21,11 +21,22 @@ passport.use(new LocalStrategy(function(username, password, done) {
 }))
 
 var FacebookStrategy = require('passport-facebook').Strategy
-
 passport.use(new FacebookStrategy({
     clientID: 'your-client-id',
     clientSecret: 'your-secret',
     callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/facebook/callback'
+  },
+  function(token, tokenSecret, profile, done) {
+    // retrieve user ...
+    done(null, user)
+  }
+))
+
+var TwitterStrategy = require('passport-twitter').Strategy
+passport.use(new TwitterStrategy({
+    consumerKey: 'your-consumer-key',
+    consumerSecret: 'your-secret',
+    callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/twitter/callback'
   },
   function(token, tokenSecret, profile, done) {
     // retrieve user ...
