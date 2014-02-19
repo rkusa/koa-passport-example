@@ -63,6 +63,15 @@ public.get('/auth/twitter/callback',
   })
 )
 
+public.get('/auth/google', passport.authenticate('google'))
+
+public.get('/auth/google/callback', 
+  passport.authenticate('google', {
+    successRedirect: '/app',
+    failureRedirect: '/'
+  })
+)
+
 app.use(function*(next) {
   this.req.query = this.query
   yield next
