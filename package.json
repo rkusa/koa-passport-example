@@ -17,7 +17,6 @@
     "koa-passport": "~0.1.0",
     "passport-local": "~0.1.6",
     "koa": "~0.3.0",
-    "koa-session": "~2.0.0",
     "koa-render": "~0.2.1",
     "koa-router": "~3.0.1",
     "koa-formidable": "~0.1.0",

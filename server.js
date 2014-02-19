@@ -2,8 +2,7 @@ var koa = require('koa')
   , app = koa()
 
 // sessions
-var session = require('koa-session')
-// var session = require('koa-sess') // alternative
+var session = require('koa-sess')
 app.keys = ['your-session-secret']
 app.use(session())
 
