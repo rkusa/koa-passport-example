@@ -43,3 +43,14 @@ passport.use(new TwitterStrategy({
     done(null, user)
   }
 ))
+
+var GoogleStrategy = require('passport-google').Strategy
+passport.use(new GoogleStrategy({
+    returnURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/google/callback',
+    realm: 'http://localhost:' + (process.env.PORT || 3000)
+  },
+   function(identifier, profile, done) {
+    // retrieve user ...
+    done(null, user)
+  }
+))
