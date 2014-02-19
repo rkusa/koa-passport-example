@@ -49,7 +49,7 @@ passport.use(new GoogleStrategy({
     returnURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/google/callback',
     realm: 'http://localhost:' + (process.env.PORT || 3000)
   },
-  function(token, tokenSecret, profile, done) {
+   function(identifier, profile, done) {
     // retrieve user ...
     done(null, user)
   }
