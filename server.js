@@ -71,11 +71,6 @@ public.get('/auth/google/callback',
   })
 )
 
-app.use(function*(next) {
-  this.req.query = this.query
-  yield next
-})
-
 app.use(public.middleware())
 
 // Require authentication for now
