@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/rkusa/koa-passport-example",
   "dependencies": {
-    "koa-passport": "~0.1.0",
+    "koa-passport": "~0.2.0",
     "passport-local": "~0.1.6",
     "koa": "~0.3.0",
     "koa-render": "~0.2.1",
