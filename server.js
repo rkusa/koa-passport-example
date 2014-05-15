@@ -32,6 +32,20 @@ public.get('/', function*() {
   this.body = yield this.render('login')
 })
 
+public.post('/custom', function*(next) {
+  var ctx = this
+  yield passport.authenticate('local', function*(err, user, info) {
+    if (err) throw err
+    if (user === false) {
+      ctx.status = 401
+      ctx.body = { success: false }
+    } else {
+      yield ctx.login(user)
+      ctx.body = { success: true }
+    }
+  }).call(this, next)
+})
+
 // POST /login
 public.post('/login',
   passport.authenticate('local', {
