@@ -2,7 +2,7 @@ var koa = require('koa')
   , app = koa()
 
 // sessions
-var session = require('koa-sess')
+var session = require('koa-generic-session')
 app.keys = ['your-session-secret']
 app.use(session())
 
@@ -34,7 +34,7 @@ public.get('/', function*() {
 
 public.post('/custom', function*(next) {
   var ctx = this
-  yield passport.authenticate('local', function*(err, user, info) {
+  yield* passport.authenticate('local', function*(err, user, info) {
     if (err) throw err
     if (user === false) {
       ctx.status = 401
