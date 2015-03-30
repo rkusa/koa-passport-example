@@ -1,6 +1,9 @@
 var koa = require('koa')
   , app = koa()
 
+// trust proxy
+app.proxy = true
+
 // sessions
 var session = require('koa-generic-session')
 app.keys = ['your-session-secret']

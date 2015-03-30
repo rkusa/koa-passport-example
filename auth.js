@@ -44,12 +44,13 @@ passport.use(new TwitterStrategy({
   }
 ))
 
-var GoogleStrategy = require('passport-google').Strategy
+var GoogleStrategy = require('passport-google-auth').Strategy
 passport.use(new GoogleStrategy({
-    returnURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/google/callback',
-    realm: 'http://localhost:' + (process.env.PORT || 3000)
+    clientId: 'your-client-id',
+    clientSecret: 'your-secret',
+    callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/google/callback'
   },
-   function(identifier, profile, done) {
+  function(token, tokenSecret, profile, done) {
     // retrieve user ...
     done(null, user)
   }
