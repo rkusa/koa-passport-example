@@ -37,7 +37,7 @@ public.get('/', function*() {
 
 public.post('/custom', function*(next) {
   var ctx = this
-  yield* passport.authenticate('local', function*(err, user, info) {
+  yield passport.authenticate('local', function*(err, user, info) {
     if (err) throw err
     if (user === false) {
       ctx.status = 401
