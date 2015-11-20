@@ -1,118 +1,106 @@
-var koa = require('koa')
-  , app = koa()
+const Koa = require('koa')
+const app = new Koa()
 
 // trust proxy
 app.proxy = true
 
 // sessions
-var session = require('koa-generic-session')
+const convert = require('koa-convert')
+const session = require('koa-generic-session')
 app.keys = ['your-session-secret']
-app.use(session())
+app.use(convert(session()))
 
 // body parser
-var bodyParser = require('koa-bodyparser')
+const bodyParser = require('koa-bodyparser')
 app.use(bodyParser())
 
 // authentication
 require('./auth')
-var passport = require('koa-passport')
+const passport = require('koa-passport')
 app.use(passport.initialize())
 app.use(passport.session())
 
-// append view renderer
-var views = require('koa-render')
-app.use(views('./views', {
-  map: { html: 'handlebars' },
-  cache: false
+// routes
+const fs    = require('fs')
+const route = require('koa-route')
+
+app.use(route.get('/', function(ctx) {
+  ctx.type = 'html'
+  ctx.body = fs.createReadStream('views/login.html')
 }))
 
-// public routes
-var Router = require('koa-router')
-
-var public = new Router()
-
-public.get('/', function*() {
-  this.body = yield this.render('login')
-})
-
-public.post('/custom', function*(next) {
-  var ctx = this
-  yield passport.authenticate('local', function*(err, user, info) {
-    if (err) throw err
+app.use(route.post('/custom', function(ctx, next) {
+  return passport.authenticate('local', function(user, info, status) {
     if (user === false) {
       ctx.status = 401
       ctx.body = { success: false }
     } else {
-      yield ctx.login(user)
       ctx.body = { success: true }
+      return ctx.login(user)
     }
-  }).call(this, next)
-})
+  })(ctx, next)
+}))
 
 // POST /login
-public.post('/login',
+app.use(route.post('/login',
   passport.authenticate('local', {
     successRedirect: '/app',
     failureRedirect: '/'
   })
-)
+))
 
-public.get('/logout', function*(next) {
-  this.logout()
-  this.redirect('/')
-})
+app.use(route.get('/logout', function(ctx) {
+  ctx.logout()
+  ctx.redirect('/')
+}))
 
-public.get('/auth/facebook',
+app.use(route.get('/auth/facebook',
   passport.authenticate('facebook')
-)
+))
 
-public.get('/auth/facebook/callback',
+app.use(route.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
     successRedirect: '/app',
     failureRedirect: '/'
   })
-)
+))
 
-public.get('/auth/twitter',
+app.use(route.get('/auth/twitter',
   passport.authenticate('twitter')
-)
+))
 
-public.get('/auth/twitter/callback',
+app.use(route.get('/auth/twitter/callback',
   passport.authenticate('twitter', {
     successRedirect: '/app',
     failureRedirect: '/'
   })
-)
+))
 
-public.get('/auth/google',
+app.use(route.get('/auth/google',
   passport.authenticate('google')
-)
+))
 
-public.get('/auth/google/callback',
+app.use(route.get('/auth/google/callback',
   passport.authenticate('google', {
     successRedirect: '/app',
     failureRedirect: '/'
   })
-)
-
-app.use(public.middleware())
+))
 
 // Require authentication for now
-app.use(function*(next) {
-  if (this.isAuthenticated()) {
-    yield next
+app.use(function(ctx, next) {
+  if (ctx.isAuthenticated()) {
+    return next()
   } else {
-    this.redirect('/')
+    ctx.redirect('/')
   }
 })
 
-var secured = new Router()
-
-secured.get('/app', function*() {
-  this.body = yield this.render('app')
-})
-
-app.use(secured.middleware())
+app.use(route.get('/app', function(ctx) {
+  ctx.type = 'html'
+  ctx.body = fs.createReadStream('views/app.html')
+}))
 
 // start server
-app.listen(process.env.PORT || 3000)
+const port = process.env.PORT || 3000
+app.listen(port, () => console.log('Server listening on', port))
