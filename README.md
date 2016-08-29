@@ -2,5 +2,8 @@
 
 Example for [koa-passport](https://github.com/rkusa/koa-passport)
 
-**Notice: `master` branch is about `koa-passport@2` (and therefore about `koa@2`), for `koa-passport@1` have a look at the `koa-passport@1.x` branch.**
-
+koa-passport version  | koa version | branch
+--------------------- | ------------| ----------------
+1.x                   | 1.x         | koa-passport@1.x
+2.x                   | 2.x         | koa-passport@2.x
+3.x                   | 2.x         | master

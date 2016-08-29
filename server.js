@@ -30,7 +30,7 @@ app.use(route.get('/', function(ctx) {
 }))
 
 app.use(route.post('/custom', function(ctx, next) {
-  return passport.authenticate('local', function(user, info, status) {
+  return passport.authenticate('local', function(err, user, info, status) {
     if (user === false) {
       ctx.status = 401
       ctx.body = { success: false }
