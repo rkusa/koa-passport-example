@@ -32,8 +32,8 @@ app.use(route.get('/', function(ctx) {
 app.use(route.post('/custom', function(ctx, next) {
   return passport.authenticate('local', function(err, user, info, status) {
     if (user === false) {
-      ctx.status = 401
       ctx.body = { success: false }
+      ctx.throw(401)
     } else {
       ctx.body = { success: true }
       return ctx.login(user)

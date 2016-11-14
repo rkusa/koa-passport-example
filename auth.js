@@ -1,26 +1,38 @@
-var passport = require('koa-passport')
+const passport = require('koa-passport')
 
-var user = { id: 1, username: 'test' }
+const fetchUser = (() => {
+  // This is an example! Use password hashing in your
+  const user = { id: 1, username: 'test', password: 'test' }
+  return async function() {
+    return user
+  }
+})()
 
 passport.serializeUser(function(user, done) {
   done(null, user.id)
 })
 
-passport.deserializeUser(function(id, done) {
-  done(null, user)
+passport.deserializeUser(async function(id, done) {
+  try {
+    const user = await fetchUser()
+    done(null, user)
+  } catch(err) {
+    done(err)
+  }
 })
 
-var LocalStrategy = require('passport-local').Strategy
-passport.use(new LocalStrategy(function(username, password, done) {
-  // retrieve user ...
-  if (username === 'test' && password === 'test') {
+const LocalStrategy = require('passport-local').Strategy
+passport.use(new LocalStrategy(async function(username, password, done) {
+  const user = await fetchUser()
+
+  if (username === user.username && password === user.password) {
     done(null, user)
   } else {
     done(null, false)
   }
 }))
 
-var FacebookStrategy = require('passport-facebook').Strategy
+const FacebookStrategy = require('passport-facebook').Strategy
 passport.use(new FacebookStrategy({
     clientID: 'your-client-id',
     clientSecret: 'your-secret',
@@ -32,7 +44,7 @@ passport.use(new FacebookStrategy({
   }
 ))
 
-var TwitterStrategy = require('passport-twitter').Strategy
+const TwitterStrategy = require('passport-twitter').Strategy
 passport.use(new TwitterStrategy({
     consumerKey: 'your-consumer-key',
     consumerSecret: 'your-secret',
@@ -44,7 +56,7 @@ passport.use(new TwitterStrategy({
   }
 ))
 
-var GoogleStrategy = require('passport-google-auth').Strategy
+const GoogleStrategy = require('passport-google-auth').Strategy
 passport.use(new GoogleStrategy({
     clientId: 'your-client-id',
     clientSecret: 'your-secret',

@@ -1,7 +1,7 @@
 {
   "name": "koa-passport-example",
   "author": "Markus Ast <npm.m@rkusa.st",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
   "keywords": [
     "koa",
@@ -10,16 +10,16 @@
     "authentication"
   ],
   "scripts": {
-    "start": "node server"
+    "start": "node --harmony-async-await server.js"
   },
   "homepage": "https://github.com/rkusa/koa-passport-example",
   "dependencies": {
     "handlebars": "^4.0",
-    "koa": "^2.0.0-alpha.3",
+    "koa": "^2.0.0-alpha.7",
     "koa-bodyparser": "^3.0",
     "koa-convert": "^1.2",
     "koa-generic-session": "^1.6",
-    "koa-passport": "^2.0",
+    "koa-passport": "3.0.0-rc.1",
     "koa-route": "^3.0",
     "passport-facebook": "^2.0",
     "passport-google-auth": "^1.0",
@@ -31,6 +31,6 @@
     "url": "git://github.com/rkusa/koa-passport-example.git"
   },
   "engines": {
-    "node": ">= 4"
+    "node": ">=7"
   }
 }
