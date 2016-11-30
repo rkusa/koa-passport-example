@@ -40,7 +40,7 @@ passport.use(new FacebookStrategy({
   },
   function(token, tokenSecret, profile, done) {
     // retrieve user ...
-    done(null, user)
+    fetchUser().then(user => done(null, user))
   }
 ))
 
@@ -52,7 +52,7 @@ passport.use(new TwitterStrategy({
   },
   function(token, tokenSecret, profile, done) {
     // retrieve user ...
-    done(null, user)
+    fetchUser().then(user => done(null, user))
   }
 ))
 
@@ -64,6 +64,6 @@ passport.use(new GoogleStrategy({
   },
   function(token, tokenSecret, profile, done) {
     // retrieve user ...
-    done(null, user)
+    fetchUser().then(user => done(null, user))
   }
 ))
