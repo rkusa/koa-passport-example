@@ -22,14 +22,16 @@ passport.deserializeUser(async function(id, done) {
 })
 
 const LocalStrategy = require('passport-local').Strategy
-passport.use(new LocalStrategy(async function(username, password, done) {
-  const user = await fetchUser()
-
-  if (username === user.username && password === user.password) {
-    done(null, user)
-  } else {
-    done(null, false)
-  }
+passport.use(new LocalStrategy(function(username, password, done) {
+  fetchUser()
+    .then(user => {
+      if (username === user.username && password === user.password) {
+        done(null, user)
+      } else {
+        done(null, false)
+      }
+    })
+    .catch(err => done(err))
 }))
 
 const FacebookStrategy = require('passport-facebook').Strategy
