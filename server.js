@@ -5,10 +5,9 @@ const app = new Koa()
 app.proxy = true
 
 // sessions
-const convert = require('koa-convert')
-const session = require('koa-generic-session')
+const session = require('koa-session')
 app.keys = ['your-session-secret']
-app.use(convert(session()))
+app.use(session({}, app))
 
 // body parser
 const bodyParser = require('koa-bodyparser')
