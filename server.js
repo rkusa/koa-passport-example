@@ -28,7 +28,7 @@ app.use(route.get('/', function(ctx) {
   ctx.body = fs.createReadStream('views/login.html')
 }))
 
-app.use(route.post('/custom', function(ctx, next) {
+app.use(route.post('/custom', function(ctx) {
   return passport.authenticate('local', function(err, user, info, status) {
     if (user === false) {
       ctx.body = { success: false }
@@ -37,7 +37,7 @@ app.use(route.post('/custom', function(ctx, next) {
       ctx.body = { success: true }
       return ctx.login(user)
     }
-  })(ctx, next)
+  })(ctx)
 }))
 
 // POST /login
