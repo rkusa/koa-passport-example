@@ -10,6 +10,10 @@ koa-passport version  | koa version | branch
 
 ## Other Examples
 
+## Note
+
+* If your node version greater than or equal 8.4.0 then replace "start": "node --harmony-async-await server.js" with "start": "node server.js"
+
 ### Integrating with databases
 
 * [Example with mongoose module for MongoDB](https://github.com/mapmeld/koa-passport-example)
