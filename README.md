@@ -17,3 +17,7 @@ koa-passport version  | koa version | branch
 ### Integrating with databases
 
 * [Example with mongoose module for MongoDB](https://github.com/mapmeld/koa-passport-example)
+
+### koa-router
+
+* [Example with koa-router](https://github.com/mjhea0/koa-passport-example)
