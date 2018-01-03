@@ -21,3 +21,4 @@ koa-passport version  | koa version | branch
 ### koa-router
 
 * [Example with koa-router](https://github.com/mjhea0/koa-passport-example)
+* Full-featured example with koa-router, koa-session, bcrypt, postgres, and koa-redis - [blog post](http://mherman.org/blog/2018/01/02/user-authentication-with-passport-and-koa), [code](https://github.com/mjhea0/node-koa-api)
